@@ -5,12 +5,12 @@ from django.db import models
 # Create your models here.
 
 class user(models.Model):
-    uid = models.IntegerField(blank=False, null=False, primary_key=True)
+    uid = models.AutoField (primary_key=True)
     tel = models.CharField(max_length=11, blank=False, null=False)
     pwd = models.CharField(max_length=10, blank=False, null=False)
 
 class address(models.Model):
-    aid = models.IntegerField(blank=False, null=False, primary_key=True)
+    aid = models.AutoField (primary_key=True)
     addr = models.CharField(max_length=100, blank=False, null=False)
     user = models.ForeignKey(
         'user',
@@ -18,7 +18,7 @@ class address(models.Model):
     )
 
 class order(models.Model):
-    oid = models.IntegerField(blank=False,null=False,primary_key=True)
+    oid = models.AutoField (primary_key=True)
     time = models.DateTimeField(blank=False,null=False)
     price = models.FloatField(blank=False,null=False)
     status = models.CharField(max_length=30,blank=False,null=False)
@@ -32,10 +32,10 @@ class order(models.Model):
     )
 
 class product(models.Model):
-    pid = models.IntegerField(blank=False,null=False,primary_key=True)
+    pid = models.AutoField (primary_key=True)
     name = models.CharField(max_length=100,blank=False,null=False)
     price = models.FloatField(blank=False,null=False)
-    num = models.IntegerField(blank=False,null=False)
+    num = models.IntegerField (blank=False,null=False)
     image_link = models.URLField(blank=False,null=False)
     second_category = models.ForeignKey(
         'second_category',
@@ -43,7 +43,7 @@ class product(models.Model):
     )
 
 class chat(models.Model):
-    oid = models.IntegerField(blank=False,null=False,primary_key=True)
+    oid = models.AutoField (primary_key=True)
     price = models.FloatField(blank=False,null=False)
     user = models.ForeignKey(
         'user',
@@ -51,7 +51,7 @@ class chat(models.Model):
     )
 
 class second_category(models.Model):
-    scid = models.IntegerField(blank=False,null=False,primary_key=True)
+    scid = models.AutoField (primary_key=True)
     name = models.CharField(max_length=100,blank=False,null=False)
     first_category = models.ForeignKey(
         'first_category',
@@ -59,7 +59,7 @@ class second_category(models.Model):
     )
 
 class first_category(models.Model):
-    fcid = models.IntegerField(blank=False,null=False,primary_key=True)
+    fcid = models.AutoField (primary_key=True)
     name = models.CharField(max_length=100,blank=False,null=False)
 
 class order_product(models.Model):
