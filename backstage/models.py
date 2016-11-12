@@ -59,11 +59,8 @@ class second_category(models.Model):
     )
 
 class first_category(models.Model):
-
     fcid = models.IntegerField(blank=False,null=False,primary_key=True)
     name = models.CharField(max_length=100,blank=False,null=False)
-
-
 
 class order_product(models.Model):
     order = models.ForeignKey(
@@ -75,7 +72,6 @@ class order_product(models.Model):
         on_delete=models.CASCADE,
     )
     pnum = models.IntegerField(blank=False,null=False)
-
 
 class chat_pro(models.Model):
     chat = models.ForeignKey(
