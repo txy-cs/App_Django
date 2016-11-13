@@ -17,6 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from backstage import views as backstage_views
 urlpatterns = [
+    url(r'^login/$',backstage_views.login),
     url(r'^admin/', admin.site.urls),
     url(r'^first_category$', backstage_views.getFirstCategory),
     url(r'^second_category$', backstage_views.getSecondCategory),
