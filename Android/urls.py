@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^first_category$', backstage_views.getFirstCategory),
     url(r'^second_category$', backstage_views.getSecondCategory),
+    url(r'^product$', backstage_views.getProduct),
 ]

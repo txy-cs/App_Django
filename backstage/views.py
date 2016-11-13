@@ -18,10 +18,15 @@ def getSecondCategory(request):
         l[e.scid]=e.name
     return HttpResponse(json.dumps(l))
 
-#def getProduct(request):
-#    fcid=request.GET['fcid']
-#    scid=request.GET['scid']
-#    l=dict()
-#    for e in product.objects.filter(first_category_id=fcid).filter(second_category=scid):
-#        l[e.]
+def getProduct(request):
+    scid=request.GET['scid']
+    l=dict()
+    for e in product.objects.filter(second_category=scid):
+        temp=dict()
+        temp['name']=e.name
+        temp['price']=e.price
+        temp['num']=e.num
+        temp['image_link']=e.image_link
+        l[e.pid]=temp
+    return HttpResponse(json.dumps(l))
     
