@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import json,time
-from backstage.models import first_category,second_category,product
+from backstage.models import first_category,second_category,product,order,order_product,user,address
 
 # Create your views here.
 
@@ -30,7 +30,23 @@ def getProduct(request):
         temp['image_link']=e.image_link
         l[e.pid]=temp
     return HttpResponse(json.dumps(l))
-    
+
+def getorder(request):# 根据用户返回订单
+    uid=request.GET['uid']
+    l=dict()
+    for e in order.objects.filter(user_id=uid):
+        temp=dict()
+        temp['price']=e.price
+        temp['time']=e.time.strftime("%Y-%m-%d %H:%M:%S")
+        temp['status']=e.status
+        temp['address']=address.objects.get(aid=e.address_id).addr
+        temp2=dict()
+        for sube in order_product.objects.filter(order_id=e.oid):
+            temp2[sube.product_id]=sube.pnum
+        temp['products']=temp2
+        l[e.oid]=temp
+    return HttpResponse(json.dumps(l))
+
 def login(request):
     message = { "datas": [],
                 "time": time.strftime('%Y-%m-%d-%H-%M-%S'),

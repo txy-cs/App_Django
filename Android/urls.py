@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^first_category$', backstage_views.getFirstCategory),
     url(r'^second_category$', backstage_views.getSecondCategory),
     url(r'^product$', backstage_views.getProduct),
+    url(r'^order$', backstage_views.getorder),
 ]

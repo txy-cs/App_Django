@@ -19,7 +19,7 @@ class address(models.Model):
 
 class order(models.Model):
     oid = models.AutoField (primary_key=True)
-    time = models.DateTimeField(blank=False,null=False)
+    time = models.DateTimeField(auto_now=True,blank=False,null=False)
     price = models.FloatField(blank=False,null=False)
     status = models.CharField(max_length=30,blank=False,null=False)
     user = models.ForeignKey(
