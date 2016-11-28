@@ -31,7 +31,17 @@ def getProduct(request):
         l[e.pid]=temp
     return HttpResponse(json.dumps(l))
 
-def getorder(request):# 根据用户返回订单
+def getProductDetail(request):
+    pid=request.GET['pid']
+    p=product.objects.get(pid=pid)
+    l=dict()
+    l['pid']=p.pid
+    l['name']=p.name
+    l['price']=p.price
+    l['image_link']=p.image_link
+    return HttpResponse(json.dumps(l))
+
+def getOrder(request):# 根据用户返回订单
     uid=request.GET['uid']
     l=dict()
     for e in order.objects.filter(user_id=uid):
