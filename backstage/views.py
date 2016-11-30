@@ -73,3 +73,25 @@ def login(request):
         message["status_no"]="1002"
     
     return HttpResponse(json.dumps(message))
+
+def modifyCart(request):
+    message = { "datas": [],
+                "time": time.strftime('%Y-%m-%d-%H-%M-%S'),
+                "status_no": 0,
+                "status_msg": ""
+            }
+    user=request.GET['user']
+    product_id=request.GET['id']
+    product_num=request.GET['num']
+    option=request.GET['option']
+    if option=='Add':
+        pass
+    elif option=='Delete':
+        pass
+    elif option=='Querry':
+        pass
+    else:
+        message["status_msg"]="you have wrrong option"
+        return HttpResponse(json.dumps(message))
+
+
