@@ -85,7 +85,8 @@ def modifyCart(request):
     product_num=request.GET['num']
     option=request.GET['option']
     if option=='Add':
-        pass
+        total_price=chat.objects.filter(user_id=id).price
+        print total
     elif option=='Delete':
         pass
     elif option=='Querry':

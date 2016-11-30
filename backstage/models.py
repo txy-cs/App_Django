@@ -83,14 +83,3 @@ class chat_pro(models.Model):
         on_delete=models.CASCADE,
     )
     pnum = models.IntegerField(blank=False,null=False)
-
-class cart(models.Model):
-    user = models.ForeignKey(
-        'user',
-        on_delete=models.CASCADE,
-    )
-    product = models.ForeignKey(
-        'product',
-        on_delete=models.CASCADE,
-    )
-    pnum = models.IntegerField(blank=False,null=False)
