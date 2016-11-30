@@ -84,9 +84,30 @@ def modifyCart(request):
     product_id=request.GET['id']
     product_num=request.GET['num']
     option=request.GET['option']
+
+    try:
+        productobj=product.objects.get(pid=product_id)
+        userobj=user.objects.get(uid=user_id)
+    
+        if len(chat.objects.filter(user=userobj))==0:
+            chat.objects.create(user=userobj,price=0)
+        chatobj=chat.objects.get(user_id=user_id)
+
+        if len(chat_pro.objects.filter(chat=chatobj,product=product_id)==0:
+            chat_pro.objects.create(chat=chatobj,product=product_id,pnum=product_num)
+        else:
+            chatproobj=chat_pro.objects.get(chat=chatobj,product=procuct_id)
+            chatproobj.pnum+=product_num
+            chatproobj.save()
+        
+        chatobj.price=productobj.price*product_num+chatobj.price
+        chatobj.save()
+    except ObjectDoesNotExist:
+        message["status_msg"]="you have wrrong with user or product"
+        return HttpResponse(json.dumps(message))
+        
     if option=='Add':
-        total_price=chat.objects.filter(user_id=id).price
-        print total
+        pass
     elif option=='Delete':
         pass
     elif option=='Querry':
