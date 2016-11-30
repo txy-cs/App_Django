@@ -74,7 +74,7 @@ def login(request):
     
     return HttpResponse(json.dumps(message))
 
-def modifyCart(request):
+def AddCart(request):
     message = { "datas": [],
                 "time": time.strftime('%Y-%m-%d-%H-%M-%S'),
                 "status_no": 0,
@@ -83,7 +83,6 @@ def modifyCart(request):
     user=request.GET['user']
     product_id=request.GET['id']
     product_num=request.GET['num']
-    option=request.GET['option']
 
     try:
         productobj=product.objects.get(pid=product_id)
@@ -92,28 +91,28 @@ def modifyCart(request):
         if len(chat.objects.filter(user=userobj))==0:
             chat.objects.create(user=userobj,price=0)
         chatobj=chat.objects.get(user_id=user_id)
-
-        if len(chat_pro.objects.filter(chat=chatobj,product=product_id)==0:
-            chat_pro.objects.create(chat=chatobj,product=product_id,pnum=product_num)
-        else:
-            chatproobj=chat_pro.objects.get(chat=chatobj,product=procuct_id)
-            chatproobj.pnum+=product_num
-            chatproobj.save()
-        
-        chatobj.price=productobj.price*product_num+chatobj.price
-        chatobj.save()
-    except ObjectDoesNotExist:
+    except:
         message["status_msg"]="you have wrrong with user or product"
         return HttpResponse(json.dumps(message))
-        
-    if option=='Add':
-        pass
-    elif option=='Delete':
-        pass
-    elif option=='Querry':
-        pass
+    
+    if len(chat_pro.objects.filter(chat=chatobj,product=product_id))==0:
+        chat_pro.objects.create(chat=chatobj,product=product_id,pnum=product_num)
     else:
-        message["status_msg"]="you have wrrong option"
-        return HttpResponse(json.dumps(message))
+        chatproobj=chat_pro.objects.get(chat=chatobj,product=procuct_id)
+        chatproobj.pnum+=product_num
+        chatproobj.save()      
+    chatobj.price=productobj.price*product_num+chatobj.price
+    chatobj.save()
+    message["status_msg"]="Succeed"
+    return HttpResponse(json.dumps(message))
+
+def QuerryCart(request):
+    message = { "datas": [],
+                "time": time.strftime('%Y-%m-%d-%H-%M-%S'),
+                "status_no": 0,
+                "status_msg": ""
+            }
+    
+    return HttpResponse(json.dumps(message))
 
 

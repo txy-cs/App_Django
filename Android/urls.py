@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^product$', backstage_views.getProduct),
     url(r'^order$', backstage_views.getOrder),
     url(r'^productdetail',backstage_views.getProductDetail),
-    url(r'^modifyCart',backstage_views.modifyCart),
+    url(r'^AddCart',backstage_views.AddCart),
+    url(r'^QuerryCart',backstage_views.QuerryCart),
 ]
