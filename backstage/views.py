@@ -103,6 +103,8 @@ def AddCart(request):
         chatproobj.save()      
     chatobj.price=productobj.price*product_num+chatobj.price
     chatobj.save()
+    productobj.num-=product_num
+    productobj.save()
     message["status_msg"]="Succeed"
     return HttpResponse(json.dumps(message))
 
