@@ -127,35 +127,16 @@ def QuerryCart(request):
     ret['uid']=user_id
     ret['total']=chatobj.price
     ret['plist']=list()
-    for e in chat_pro.objects.filter(user_id=uid):
+    for e in chat_pro.objects.filter(chat=chatobj):
         temp=dict()
         productobj=product.objects.get(pid=e.product_id)
         temp['pid']=e.product_id
         temp['name']=productobj.name
         temp['price']=productobj.price
         temp['pnum']=e.pnum
-        temp['image_likn']=productobj.image_link
+        temp['image_link']=productobj.image_link
         ret['plist'].append(temp)
     
-    """"
-    the format of Cart
-    {
-        uid:
-        total:
-        plist:{
-            {
-                pid
-                name
-                price
-                pnum
-                image_link
-            }
-            {
-
-            }
-        }
-    }
-    """"
     return HttpResponse(json.dumps(ret))
 
 
