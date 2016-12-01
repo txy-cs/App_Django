@@ -115,7 +115,47 @@ def QuerryCart(request):
                 "status_no": 0,
                 "status_msg": ""
             }
+    user_id=request.GET['user']
+    try:
+        userobj=user.objects.get(uid=user_id)
+    except:
+        message["status_msg"]="you have wrrong with uid"
+        return HttpResponse(json.dumps(message))
     
-    return HttpResponse(json.dumps(message))
+    chatobj=chat.objects.get(user=userobj)
+    ret=dict()
+    ret['uid']=user_id
+    ret['total']=chatobj.price
+    ret['plist']=list()
+    for e in chat_pro.objects.filter(user_id=uid):
+        temp=dict()
+        productobj=product.objects.get(pid=e.product_id)
+        temp['pid']=e.product_id
+        temp['name']=productobj.name
+        temp['price']=productobj.price
+        temp['pnum']=e.pnum
+        temp['image_likn']=productobj.image_link
+        ret['plist'].append(temp)
+    
+    """"
+    the format of Cart
+    {
+        uid:
+        total:
+        plist:{
+            {
+                pid
+                name
+                price
+                pnum
+                image_link
+            }
+            {
+
+            }
+        }
+    }
+    """"
+    return HttpResponse(json.dumps(ret))
 
 
