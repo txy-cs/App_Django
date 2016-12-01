@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import json,time
-from backstage.models import first_category,second_category,product,order,order_product,user,address
+from backstage.models import chat,chat_pro,first_category,second_category,product,order,order_product,user,address
 
 # Create your views here.
 
@@ -80,30 +80,31 @@ def AddCart(request):
                 "status_no": 0,
                 "status_msg": ""
             }
-    user=request.GET['user']
-    product_id=request.GET['id']
-    product_num=request.GET['num']
+    user_id=request.GET['user']
+    product_id=request.GET['pid']
+    product_num=request.GET['pnum']
 
     try:
         productobj=product.objects.get(pid=product_id)
         userobj=user.objects.get(uid=user_id)
-    
+    	print userobj.uid
         if len(chat.objects.filter(user=userobj))==0:
             chat.objects.create(user=userobj,price=0)
-        chatobj=chat.objects.get(user_id=user_id)
+        chatobj=chat.objects.get(user=userobj)
+	print chatobj.price
     except:
         message["status_msg"]="you have wrrong with user or product"
         return HttpResponse(json.dumps(message))
     
     if len(chat_pro.objects.filter(chat=chatobj,product=product_id))==0:
-        chat_pro.objects.create(chat=chatobj,product=product_id,pnum=product_num)
+        chat_pro.objects.create(chat=chatobj,product=productobj,pnum=product_num)
     else:
-        chatproobj=chat_pro.objects.get(chat=chatobj,product=procuct_id)
-        chatproobj.pnum+=product_num
-        chatproobj.save()      
-    chatobj.price=productobj.price*product_num+chatobj.price
+        chatproobj=chat_pro.objects.get(chat=chatobj,product=productobj)
+        chatproobj.pnum=chatproobj.pnum+int(product_num)
+        chatproobj.save()
+    chatobj.price=float(productobj.price*int(product_num))+chatobj.price
     chatobj.save()
-    productobj.num-=product_num
+    productobj.num-=int(product_num)
     productobj.save()
     message["status_msg"]="Succeed"
     return HttpResponse(json.dumps(message))
