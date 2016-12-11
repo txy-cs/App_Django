@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^productdetail',backstage_views.getProductDetail),
     url(r'^AddCart',backstage_views.AddCart),
     url(r'^QuerryCart',backstage_views.QuerryCart),
+    url(r'^search$',backstage_views.search),
 ]

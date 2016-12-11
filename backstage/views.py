@@ -139,4 +139,9 @@ def QuerryCart(request):
     
     return HttpResponse(json.dumps(ret))
 
-
+def search(request):
+    kw=request.GET['kw']
+    l=dict()
+    for e in product.objects.filter(name__contains=kw): 
+        l[e.pid]=e.name
+    return HttpResponse(json.dumps(l))
