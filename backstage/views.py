@@ -143,5 +143,10 @@ def search(request):
     kw=request.GET['kw']
     l=dict()
     for e in product.objects.filter(name__contains=kw): 
-        l[e.pid]=e.name
+        temp=dict()
+        temp['name']=e.name
+        temp['price']=e.price
+        temp['num']=e.num
+        temp['image_link']=e.image_link
+        l[e.pid]=temp
     return HttpResponse(json.dumps(l))
